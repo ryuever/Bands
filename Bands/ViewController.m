@@ -17,11 +17,18 @@ static NSString *bandObjectKey = @"BABandObjectKey";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.bandObject = [[WBABand alloc]init];
+//    self.bandObject = [[WBABand alloc]init];
     
 //    self.nameTextField.tag = 1;
 //    self.nameTextField2.tag = 2;
     // Do any additional setup after loading the view, typically from a nib.
+    
+    NSLog(@"titleLabel.text = %@", self.titleLabel.text);
+    [self loadBandObject];
+    if (!self.bandObject) {
+        self.bandObject = [[WBABand alloc]init];
+    }
+    [self setUserInterfaceValues];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -102,10 +109,33 @@ static NSString *bandObjectKey = @"BABandObjectKey";
 - (void)saveBandObject
 {
     NSData *bandObjectData = [NSKeyedArchiver archivedDataWithRootObject:self.bandObject];
-    NSLog(@"bandObjectData is %@", bandObjectData);
+//    NSData *bandObjectData = [NSKeyedArchiver archiveRootObject:self.bandObject toFile:@"~/Desktop/temp.plist"];
+//    BOOL verifySaving= [NSKeyedArchiver archiveRootObject:self.bandObject toFile:@"/Users/ryuyutyo/Desktop/temp.plist"];
+
+//    NSLog(@"bandObjectData is %@", bandObjectData);
     [[NSUserDefaults standardUserDefaults]setObject:bandObjectData forKey:bandObjectKey];
     NSLog(@"bandObjectKey is %@", bandObjectKey);
+    
+//    NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
+//    NSLog(@"udid is %@", udid);
 }
 
+- (void)loadBandObject
+{
+    NSData * bandObjectData = [[NSUserDefaults standardUserDefaults]objectForKey:bandObjectKey];
+    if (bandObjectData) {
+        self.bandObject = [NSKeyedUnarchiver unarchiveObjectWithData:bandObjectData];
+    }
+}
+
+- (void)setUserInterfaceValues
+{
+    self.nameTextField.text = self.bandObject.name;
+    self.notesTextView.text = self.bandObject.notes;
+    self.ratingStepper.value = self.bandObject.rating;
+    self.ratingValueLabel.text = [NSString stringWithFormat:@"%g", self.ratingStepper.value];
+    self.touringStatusSegmentedControl.selectedSegmentIndex = self.bandObject.touringStatus;
+    self.haveSeenLiveSwitch.on = self.bandObject.haveSeenLive;
+}
 
 @end
