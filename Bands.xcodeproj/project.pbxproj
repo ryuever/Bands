@@ -14,6 +14,8 @@
 		5FC4FBF619E7811300535EDD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FC4FBF519E7811300535EDD /* Images.xcassets */; };
 		5FC4FBF919E7811300535EDD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FC4FBF719E7811300535EDD /* LaunchScreen.xib */; };
 		5FC4FC0519E7811300535EDD /* BandsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC4FC0419E7811300535EDD /* BandsTests.m */; };
+		5FC4FC1019E781F800535EDD /* WBABand.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC4FC0F19E781F800535EDD /* WBABand.m */; };
+		5FC4FC1319E7823300535EDD /* WBABandListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC4FC1219E7823300535EDD /* WBABandListTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,10 @@
 		5FC4FBFE19E7811300535EDD /* BandsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BandsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FC4FC0319E7811300535EDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FC4FC0419E7811300535EDD /* BandsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BandsTests.m; sourceTree = "<group>"; };
+		5FC4FC0E19E781F800535EDD /* WBABand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBABand.h; sourceTree = "<group>"; };
+		5FC4FC0F19E781F800535EDD /* WBABand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBABand.m; sourceTree = "<group>"; };
+		5FC4FC1119E7823300535EDD /* WBABandListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBABandListTableViewController.h; sourceTree = "<group>"; };
+		5FC4FC1219E7823300535EDD /* WBABandListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBABandListTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,10 @@
 		5FC4FBDC19E7811300535EDD = {
 			isa = PBXGroup;
 			children = (
+				5FC4FC1119E7823300535EDD /* WBABandListTableViewController.h */,
+				5FC4FC1219E7823300535EDD /* WBABandListTableViewController.m */,
+				5FC4FC0E19E781F800535EDD /* WBABand.h */,
+				5FC4FC0F19E781F800535EDD /* WBABand.m */,
 				5FC4FBE719E7811300535EDD /* Bands */,
 				5FC4FC0119E7811300535EDD /* BandsTests */,
 				5FC4FBE619E7811300535EDD /* Products */,
@@ -222,6 +232,8 @@
 				5FC4FBF119E7811300535EDD /* ViewController.m in Sources */,
 				5FC4FBEE19E7811300535EDD /* AppDelegate.m in Sources */,
 				5FC4FBEB19E7811300535EDD /* main.m in Sources */,
+				5FC4FC1319E7823300535EDD /* WBABandListTableViewController.m in Sources */,
+				5FC4FC1019E781F800535EDD /* WBABand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +424,7 @@
 				5FC4FC0A19E7811300535EDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5FC4FC0B19E7811300535EDD /* Build configuration list for PBXNativeTarget "BandsTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +433,7 @@
 				5FC4FC0D19E7811300535EDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
