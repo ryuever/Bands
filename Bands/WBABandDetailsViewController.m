@@ -6,14 +6,15 @@
 //  Copyright (c) 2014年 ryu. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "WBABandDetailsViewController.h"
 #import "WBABand.h"
+
 static NSString *bandObjectKey = @"BABandObjectKey";
-@interface ViewController ()
+@interface WBABandDetailsViewController ()
 
 @end
 
-@implementation ViewController
+@implementation WBABandDetailsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,7 +25,7 @@ static NSString *bandObjectKey = @"BABandObjectKey";
     // Do any additional setup after loading the view, typically from a nib.
     
     NSLog(@"titleLabel.text = %@", self.titleLabel.text);
-    [self loadBandObject];
+//    [self loadBandObject];
     if (!self.bandObject) {
         self.bandObject = [[WBABand alloc]init];
     }
@@ -51,7 +52,7 @@ static NSString *bandObjectKey = @"BABandObjectKey";
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     self.bandObject.name = textField.text;
-    [self saveBandObject];
+//    [self saveBandObject];
     [textField resignFirstResponder];
     return YES;
 }
@@ -72,7 +73,7 @@ static NSString *bandObjectKey = @"BABandObjectKey";
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {
     self.bandObject.notes = textView.text;
-    [self saveBandObject];
+//    [self saveBandObject];
     self.saveNotesButton.enabled = NO;
     NSLog(@"from textViewShouldEndEditing");
     [textView resignFirstResponder];
@@ -89,44 +90,44 @@ static NSString *bandObjectKey = @"BABandObjectKey";
 {
     self.ratingValueLabel.text = [NSString stringWithFormat:@"%g", self.ratingStepper.value];
     self.bandObject.rating = (NSInteger)self.ratingStepper.value;
-    [self saveBandObject];
+//    [self saveBandObject];
 }
 
 - (IBAction)tourStatusSegmentedControlValuechanged:(id)sender
 {
     self.bandObject.touringStatus = self.touringStatusSegmentedControl.selectedSegmentIndex;
     NSLog(@"The value of touringStatus is %d", self.bandObject.touringStatus);
-    [self saveBandObject];
+//    [self saveBandObject];
 }
 
 - (IBAction)haveSeenLiveSwitchValueChanged:(id)sender
 {
     self.bandObject.haveSeenLive = self.haveSeenLiveSwitch.on;
     NSLog(@"haveSeenLiveSwitch is %d", self.bandObject.haveSeenLive);
-    [self saveBandObject];
+//    [self saveBandObject];
 }
 
-- (void)saveBandObject
-{
-    NSData *bandObjectData = [NSKeyedArchiver archivedDataWithRootObject:self.bandObject];
-//    NSData *bandObjectData = [NSKeyedArchiver archiveRootObject:self.bandObject toFile:@"~/Desktop/temp.plist"];
-//    BOOL verifySaving= [NSKeyedArchiver archiveRootObject:self.bandObject toFile:@"/Users/ryuyutyo/Desktop/temp.plist"];
-
-//    NSLog(@"bandObjectData is %@", bandObjectData);
-    [[NSUserDefaults standardUserDefaults]setObject:bandObjectData forKey:bandObjectKey];
-    NSLog(@"bandObjectKey is %@", bandObjectKey);
-    
-//    NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
-//    NSLog(@"udid is %@", udid);
-}
-
-- (void)loadBandObject
-{
-    NSData * bandObjectData = [[NSUserDefaults standardUserDefaults]objectForKey:bandObjectKey];
-    if (bandObjectData) {
-        self.bandObject = [NSKeyedUnarchiver unarchiveObjectWithData:bandObjectData];
-    }
-}
+//- (void)saveBandObject
+//{
+//    NSData *bandObjectData = [NSKeyedArchiver archivedDataWithRootObject:self.bandObject];
+////    NSData *bandObjectData = [NSKeyedArchiver archiveRootObject:self.bandObject toFile:@"~/Desktop/temp.plist"];
+////    BOOL verifySaving= [NSKeyedArchiver archiveRootObject:self.bandObject toFile:@"/Users/ryuyutyo/Desktop/temp.plist"];
+//
+////    NSLog(@"bandObjectData is %@", bandObjectData);
+//    [[NSUserDefaults standardUserDefaults]setObject:bandObjectData forKey:bandObjectKey];
+//    NSLog(@"bandObjectKey is %@", bandObjectKey);
+//    
+////    NSString *udid = [[UIDevice currentDevice] uniqueIdentifier];
+////    NSLog(@"udid is %@", udid);
+//}
+//
+//- (void)loadBandObject
+//{
+//    NSData * bandObjectData = [[NSUserDefaults standardUserDefaults]objectForKey:bandObjectKey];
+//    if (bandObjectData) {
+//        self.bandObject = [NSKeyedUnarchiver unarchiveObjectWithData:bandObjectData];
+//    }
+//}
 
 - (void)setUserInterfaceValues
 {
@@ -150,9 +151,26 @@ static NSString *bandObjectKey = @"BABandObjectKey";
 {
     if (actionSheet.destructiveButtonIndex == buttonIndex) {
         self.bandObject = nil;
-        [self setUserInterfaceValues];
+        self.saveBand = NO;
         
-        [[NSUserDefaults standardUserDefaults]setObject:nil forKey:bandObjectKey];
+        [self dismissViewControllerAnimated:YES completion:nil];
+//        [self setUserInterfaceValues];
+        
+//        [[NSUserDefaults standardUserDefaults]setObject:nil forKey:bandObjectKey];
+    }
+}
+
+- (IBAction)saveButtonTouched:(id)sender
+{
+    if (self.bandObject.name && self.bandObject.name.length >0) {
+        self.saveBand = YES;
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *noBandNameAlertView = [[UIAlertView alloc]initWithTitle:@"Error" message:@"please supply a name for the band"
+                                                                    delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [noBandNameAlertView show];
     }
 }
 

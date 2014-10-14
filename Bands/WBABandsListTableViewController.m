@@ -7,6 +7,10 @@
 //
 
 #import "WBABandsListTableViewController.h"
+#import "WBABand.h"
+#import "WBABandDetailsViewController.h"
+
+static NSString *bandsDictionarytKey = @"BABandsDictionarytKey";
 
 @interface WBABandsListTableViewController ()
 
@@ -16,12 +20,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self loadBandsDictionary];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSLog(@"from viewWillAppear in WBABandListTableViewController");
+    
+//    if (self.bandInfoViewController && self.bandInfoViewController.saveBand) {
+//        [self addNewBand:self.bandInfoViewController.bandObject];
+//        self.bandInfoViewController = nil;
+//    }
+    
+    if (self.bandInfoViewController) {
+        if (self.bandInfoViewController.saveBand)
+        {
+            [self addNewBand:self.bandInfoViewController.bandObject];
+            [self.tableView reloadData];
+        }
+        self.bandInfoViewController = nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,21 +58,88 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+//    return 1;
+    return self.bandsDictionary.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 10;
+//    return 10;
+    
+    NSString *firstLetter = [self.firstLettersArray objectAtIndex:section];
+    NSMutableArray *bandsForLetter = [self.bandsDictionary objectForKey:firstLetter];
+    
+    return bandsForLetter.count;
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
+    NSString *firstLetter = [self.firstLettersArray objectAtIndex:indexPath.section];
+    NSMutableArray *bandsForLetter = [self.bandsDictionary objectForKey:firstLetter];
+    
+    WBABand *bandObject = [bandsForLetter objectAtIndex:indexPath.row];
 //     Configure the cell...
-    cell.textLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+    cell.textLabel.text = bandObject.name;
     return cell;
+}
+
+- (IBAction)addBandTouched:(id)sender
+{
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    self.bandInfoViewController = (WBABandDetailsViewController *)[mainStoryboard
+                                                                   instantiateViewControllerWithIdentifier:@"bandDetails"];
+    
+    [self presentViewController:self.bandInfoViewController animated:NO completion:nil];
+}
+
+
+
+- (void)addNewBand:(WBABand*)bandObject
+{
+    NSString *bandNameFirstLetter = [bandObject.name substringToIndex:1];
+    NSMutableArray *bandsForLetter = [self.bandsDictionary objectForKey:bandNameFirstLetter];
+    
+    if(!bandsForLetter)
+        bandsForLetter = [NSMutableArray array];
+    
+    [bandsForLetter addObject:bandObject];
+    [bandsForLetter sortUsingSelector:@selector(compare:)];
+    [self.bandsDictionary setObject:bandsForLetter forKey:bandNameFirstLetter];
+    
+    if(![self.firstLettersArray containsObject:bandNameFirstLetter])
+    {
+        [self.firstLettersArray addObject:bandNameFirstLetter];
+        [self.firstLettersArray sortUsingSelector:@selector(compare:)];
+    }
+    
+    [self saveBandsDictionary];
+}
+
+- (void)saveBandsDictionary
+{
+    NSData *bandsDictionaryData = [NSKeyedArchiver archivedDataWithRootObject:self.bandsDictionary];
+    [[NSUserDefaults standardUserDefaults] setObject:bandsDictionaryData forKey:bandsDictionarytKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)loadBandsDictionary
+{
+    NSData *bandsDictionaryData = [[NSUserDefaults standardUserDefaults] objectForKey:bandsDictionarytKey];
+    
+    if(bandsDictionaryData)
+    {
+        self.bandsDictionary = [NSKeyedUnarchiver unarchiveObjectWithData:bandsDictionaryData];
+        self.firstLettersArray = [NSMutableArray arrayWithArray:self.bandsDictionary.allKeys];
+        [self.firstLettersArray sortUsingSelector:@selector(compare:)];
+    }
+    else
+    {
+        self.bandsDictionary = [NSMutableDictionary dictionary];
+        self.firstLettersArray = [NSMutableArray array];
+    }
 }
 
 /*

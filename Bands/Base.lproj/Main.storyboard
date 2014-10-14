@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Band Details View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="bandDetails" id="vXZ-lx-hvc" customClass="WBABandDetailsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -117,7 +117,7 @@
                                 </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JSW-v2-MGJ">
-                                <rect key="frame" x="134" y="480" width="46" height="30"/>
+                                <rect key="frame" x="258" y="482" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Delete">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -126,10 +126,21 @@
                                     <action selector="deleteButtonTouched:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Er1-Ip-dAY"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xTL-Gl-EOV">
+                                <rect key="frame" x="16" y="482" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveButtonTouched:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="D6i-Md-VFl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="Gf5-Uz-oA0"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="haveSeenLiveSwitch" destination="i2W-bM-QxC" id="sdj-sS-2Cq"/>
@@ -144,7 +155,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-445" y="314"/>
+            <point key="canvasLocation" x="1035" y="314"/>
         </scene>
         <!--Bands-->
         <scene sceneID="GGe-hP-kKp">
@@ -155,7 +166,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="3OR-0R-RWf" style="IBUITableViewCellStyleDefault" id="76x-Cb-vc8">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="3OR-0R-RWf" style="IBUITableViewCellStyleDefault" id="76x-Cb-vc8">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="76x-Cb-vc8" id="Dut-zZ-Tdg">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -168,6 +179,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="push" id="Dav-es-lRG"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -175,7 +189,13 @@
                             <outlet property="delegate" destination="u77-cO-qFD" id="cIS-MJ-wdy"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Bands" id="HlC-Da-VHO"/>
+                    <navigationItem key="navigationItem" title="Bands" id="HlC-Da-VHO">
+                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="MU2-Br-chm">
+                            <connections>
+                                <action selector="addBandTouched:" destination="u77-cO-qFD" id="0w1-zp-z7m"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5d0-kM-zbl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

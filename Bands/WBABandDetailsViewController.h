@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "WBABand.h"
 
-@interface ViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate>
+@interface WBABandDetailsViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) WBABand *bandObject;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
@@ -20,15 +20,17 @@
 @property (nonatomic, weak) IBOutlet UILabel *ratingValueLabel;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *touringStatusSegmentedControl;
 @property (nonatomic, weak) IBOutlet UISwitch *haveSeenLiveSwitch;
+@property (nonatomic, assign) BOOL saveBand;
 
 - (IBAction)saveNotesButtonTouched:(id)sender;
 - (IBAction)ratingStepperValueChanged:(id)sender;
 - (IBAction)tourStatusSegmentedControlValuechanged:(id)sender;
 - (IBAction)haveSeenLiveSwitchValueChanged:(id)sender;
 - (IBAction)deleteButtonTouched:(id)sender;
+- (IBAction)saveButtonTouched:(id)sender;
 
-- (void)saveBandObject;
-- (void)loadBandObject;
+//- (void)saveBandObject;
+//- (void)loadBandObject;
 - (void)setUserInterfaceValues;
 @end
 
