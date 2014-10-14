@@ -39,4 +39,8 @@ static NSString *haveSeenLiveKey = @"BAHaveSeenLiveKey";
     [coder encodeBool:self.haveSeenLive forKey:haveSeenLiveKey];
 }
 
+- (NSComparisonResult)compare:(WBABand *)otherObject
+{
+    return [self.name compare:otherObject.name];
+}
 @end
