@@ -179,9 +179,17 @@ static NSString *bandObjectKey = @"BABandObjectKey";
     }
     else
     {
-        UIAlertView *noBandNameAlertView = [[UIAlertView alloc]initWithTitle:@"Error" message:@"please supply a name for the band"
-                                                                    delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [noBandNameAlertView show];
+//        UIAlertView *noBandNameAlertView = [[UIAlertView alloc]initWithTitle:@"Error" message:@"please supply a name for the band"
+//                                                                    delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [noBandNameAlertView show];
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"please supply a name for the band" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){}];
+        UIAlertAction* destructiveAction= [UIAlertAction actionWithTitle:@"destructive" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){}];
+        [alert addAction:defaultAction];
+        [alert addAction:cancelAction];
+        [alert addAction:destructiveAction];
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 
