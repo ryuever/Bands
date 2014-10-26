@@ -18,7 +18,8 @@
 - (void)addNewBand:(WBABand *)WBABand;
 - (void)saveBandsDictionary;
 - (void)loadBandsDictionary;
-
+- (void)deleteBandAtIndexPath:(NSIndexPath *)indexPath;
+- (void)updateBandObject:(WBABand *)bandObject atIndexPath:(NSIndexPath *)indexPath;
 - (IBAction)addBandTouched:(id)sender;
 
 @end

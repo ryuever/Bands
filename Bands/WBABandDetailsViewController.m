@@ -153,10 +153,16 @@ static NSString *bandObjectKey = @"BABandObjectKey";
         self.bandObject = nil;
         self.saveBand = NO;
         
-        [self dismissViewControllerAnimated:YES completion:nil];
+//        [self dismissViewControllerAnimated:YES completion:nil];
 //        [self setUserInterfaceValues];
         
 //        [[NSUserDefaults standardUserDefaults]setObject:nil forKey:bandObjectKey];
+        if (self.navigationController) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }
 }
 
@@ -164,7 +170,12 @@ static NSString *bandObjectKey = @"BABandObjectKey";
 {
     if (self.bandObject.name && self.bandObject.name.length >0) {
         self.saveBand = YES;
-        [self dismissViewControllerAnimated:YES completion:nil];
+//        [self dismissViewControllerAnimated:YES completion:nil];
+        if (self.navigationController)
+            [self.navigationController popViewControllerAnimated:YES];
+        else
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
     }
     else
     {
